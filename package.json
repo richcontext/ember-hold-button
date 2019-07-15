@@ -64,5 +64,5 @@
   "ember-addon": {
     "configPath": "tests/dummy/config"
   },
-  "homepage": "https://github.com/AddJam/ember-hold-button"
+  "homepage": "https://github.com/richcontext/ember-hold-button"
 }

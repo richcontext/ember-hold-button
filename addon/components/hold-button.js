@@ -1,5 +1,4 @@
 import { later, cancel } from '@ember/runloop';
-import { on } from '@ember/object/evented';
 import { htmlSafe } from '@ember/template';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
@@ -17,7 +16,7 @@ var HoldButtonComponent = Component.extend(positionalParams, {
   attributeBindings: ['style'],
 
   delay: 500,
-  type: 'rectangle',
+  type: '',
 
   timer: null,
   isHolding: false,
@@ -42,18 +41,23 @@ var HoldButtonComponent = Component.extend(positionalParams, {
     return htmlSafe(durations);
   }),
 
-  setup: on('willInsertElement', function() {
+  willInsertElement() {
     this.registerHandler();
-  }),
+  },
 
   registerHandler() {
-    this.on('mouseDown', this, this.startTimer);
+    var el = this.element;
+    el.setAttribute('autocomplete', 'off');
+    el.setAttribute('autocorrect', 'off');
+    el.setAttribute('autocapitalize', 'off');
+    el.setAttribute('spellcheck', 'false');
     this.on('touchStart', this, this.startTouchTimer);
+    this.on('mouseDown', this, this.startTimer);
   },
 
   startTouchTimer(e) {
     e.stopPropagation();
-    e.preventDefault();
+    e.preventDefault()
     this.startTimer();
   },
 
@@ -76,9 +80,14 @@ var HoldButtonComponent = Component.extend(positionalParams, {
   },
 
   cancelTimer() {
+    const params = this.getWithDefault('params', []);
+    const actionParams = ['release', ...params];
+    // eslint-disable-next-line
+    this.sendAction(...actionParams);
     this.set('isHolding', false);
     cancel(this.get('timer'));
     this.set('timer', null);
+    
     this.off('mouseUp', this, this.cancelTimer);
     this.off('mouseLeave', this, this.cancelTimer);
     this.off('touchEnd', this, this.cancelTimer);

@@ -4,6 +4,11 @@
   border-width: 0;
   font-size: 1em;
   background: transparent;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-user-callout: none !important;
+  -webkit-touch-callout: none !important;
+  cursor: pointer;
 }
 
 .ember-hold-button span {
