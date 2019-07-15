@@ -45,6 +45,15 @@ var HoldButtonComponent = Component.extend(positionalParams, {
     this.registerHandler();
   },
 
+  killContextMenu() {
+    const e = event || window.event;
+    e.preventDefault && e.preventDefault();
+    e.stopPropagation && e.stopPropagation();
+    e.cancelBubble = true;
+    e.returnValue = false;
+    return false;
+  },
+
   registerHandler() {
     var el = this.element;
     el.setAttribute('autocomplete', 'off');
@@ -65,7 +74,7 @@ var HoldButtonComponent = Component.extend(positionalParams, {
     if (!this.get('timer')) {
       this.set('isComplete', false);
       this.set('isHolding', true);
-
+      this.on('contextMenu', this.killContextMenu);
       this.off('mouseDown', this, this.startTimer);
       this.off('touchStart', this, this.startTouchTimer);
 
@@ -87,7 +96,7 @@ var HoldButtonComponent = Component.extend(positionalParams, {
     this.set('isHolding', false);
     cancel(this.get('timer'));
     this.set('timer', null);
-    
+    this.off('contextMenu', this.killContextMenu);
     this.off('mouseUp', this, this.cancelTimer);
     this.off('mouseLeave', this, this.cancelTimer);
     this.off('touchEnd', this, this.cancelTimer);
