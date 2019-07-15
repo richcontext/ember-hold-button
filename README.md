@@ -46,11 +46,14 @@ There are a few types of buttons out of the box; `rectangle`, `circle`, and `bor
 
 ## Options
 
-| Option | Description                                                    | Default     |
-| ------ | -------------------------------------------------------------- | ----------- |
-| delay  | Time the button should be held for, in milliseconds.           | `500`.      |
-| action | The action to perform on completion.                           | `null`      |
-| type   | Style of the button. `circle`, `border-circle` or `rectangle`. | `rectangle` |
+| Option  | Description                                                    | Default     |
+| ------- | -------------------------------------------------------------- | ----------- |
+| delay   | Time the button should be held for, in milliseconds.           | `500`.      |
+| action  | The action to perform on completion delay on hold.             | `null`      |
+| type    | Style of the button. `circle`, `border-circle` or `rectangle`. | `rectangle` |
+| release | The action to perform on release of hold.                      | `null`      |
+| tagName | The type of tag.                                               | `button`    |
+
 
 You can also pass arguments to the component which will then be passed to the action.
 
